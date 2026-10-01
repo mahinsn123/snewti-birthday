@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Snewti My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #fff0f3;
+            font-family: 'Poppins', sans-serif;
+            color: #590d22;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .page {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            padding: 20px;
+        }
+        .page.active {
+            display: flex;
+            opacity: 1;
+        }
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        /* Page 1 Styles */
+        #page1 h1 {
+            font-size: 3.5rem;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .bear-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
+            text-align: center;
+            max-width: 450px;
+            margin-bottom: 20px;
+        }
+        .bear-card img {
+            width: 100%;
+            border-radius: 15px;
+            max-height: 280px;
+            object-fit: cover;
+        }
+        .subtitle {
+            font-size: 0.95rem;
+            color: #800f2f;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .btn {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        #yesBtn:hover {
+            background-color: #ff758f;
+            transform: scale(1.05);
+        }
+        #noBtn {
+            background-color: white;
+            color: #ff4d6d;
+            position: absolute;
+            transition: 0.2s ease-out;
+        }
+
+        /* Page 2: Balloons */
+        #page2 h2 {
+            font-size: 2.8rem;
+            color: #ff4d6d;
+            margin-bottom: 10px;
+        }
+        .balloons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .balloon {
+            width: 80px;
+            height: 100px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            cursor: pointer;
+            position: relative;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 38px;
+            width: 2px;
+            height: 20px;
+            background-color: #b7094c;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .balloon-1 { background-color: #70d6ff; animation-delay: 0s; }
+        .balloon-2 { background-color: #ff70a6; animation-delay: 0.5s; }
+        .balloon-3 { background-color: #70e000; animation-delay: 1s; }
+        .balloon-4 { background-color: #9b5de5; animation-delay: 1.5s; }
+        
+        .revealed-text {
+            margin-top: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #a4133c;
+            min-height: 50px;
+            text-align: center;
+        }
+
+        /* Page 3: Reasons / Letters */
+        .reasons-container {
+            max-width: 600px;
+            text-align: center;
+        }
+        .reason-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .r-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .r-btn.active, .r-btn:hover {
+            background: #ff4d6d;
+            color: white;
+            transform: scale(1.1);
+        }
+        .reason-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(255,77,109,0.1);
+            font-size: 1.1rem;
+            color: #800f2f;
+            min-height: 100px;
+        }
+
+        /* Page 4: Envelope Letter */
+        .envelope-box {
+            background: #ff758f;
+            width: 320px;
+            height: 200px;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .letter-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 550px;
+            max-height: 75vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #590d22;
+        }
+
+        /* Page 5: 5 Meetup Pics */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 650px;
+            margin-top: 20px;
+        }
+        .memory-card {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .memory-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .memory-card p {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-weight: 600;
+            color: #ff4d6d;
+        }
+
+        .next-btn {
+            margin-top: 30px;
+            background-color: #ff4d6d;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: Welcome & No Hover Button -->
+    <div class="page active" id="page1">
+        <h1>Happy Birthday, Snewti My Love ❤️</h1>
+        <div class="bear-card">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80" alt="Cute Bears">
+        </div>
+        <p class="subtitle">I created a little something just for you, to celebrate how beautiful you make my life. Ready to see it?</p>
+        <div class="btn-container">
+            <button class="btn" id="yesBtn" onclick="nextPage(2)">Yes</button>
+            <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+        </div>
+    </div>
+
+    <!-- Page 2: Pop Balloons -->
+    <div class="page" id="page2">
+        <h2>Pop the Balloons</h2>
+        <p class="subtitle">and reveal a message from my heart...</p>
+        <div class="balloons-grid">
+            <div class="balloon balloon-1" onclick="popBalloon('You')"></div>
+            <div class="balloon balloon-2" onclick="popBalloon('make')"></div>
+            <div class="balloon balloon-3" onclick="popBalloon('life')"></div>
+            <div class="balloon balloon-4" onclick="popBalloon('beautiful')"></div>
+        </div>
+        <div class="revealed-text" id="balloonText"></div>
+        <button class="next-btn" id="balloonNext" style="display:none;" onclick="nextPage(3)">Continue</button>
+    </div>
+
+    <!-- Page 3: Reasons why you are special -->
+    <div class="page" id="page3">
+        <h2>For the one who brings beauty to my world 🌷</h2>
+        <p class="subtitle">Each button represents a reason why you are so special to me</p>
+        <div class="reasons-container">
+            <div class="reason-icons">
+                <button class="r-btn active" onclick="showReason(0)">💖</button>
+                <button class="r-btn" onclick="showReason(1)">✨</button>
+                <button class="r-btn" onclick="showReason(2)">😊</button>
+                <button class="r-btn" onclick="showReason(3)">⭐</button>
+            </div>
+            <div class="reason-card" id="reasonText">
+                How your presence brightens up my days, making everything feel a little more magical and beautiful.
+            </div>
+        </div>
+        <button class="next-btn" onclick="nextPage(4)">Continue</button>
+    </div>
+
+    <!-- Page 4: Love Letter Envelope -->
+    <div class="page" id="page4">
+        <h2 style="margin-bottom: 20px;">A letter carrying all my love...</h2>
+        <div class="envelope-box" id="envelope" onclick="openLetter()">
+            <span style="font-size: 2rem;">💌 Tap to Open</span>
+        </div>
+        <div class="letter-content" id="letterContent">
+            <h3 style="color: #ff4d6d; margin-bottom: 10px;">To my favorite person 💖</h3>
+            <p>Happy Birthday, my love! 🎉🎂</p><br>
+            <p>You are the most beautiful part of my world—the comfort in my quiet moments, and the joy in my everyday. Every single day with you feels like a gift, and I am so incredibly lucky to walk beside someone as kind, loving, and special as you 🌸✨</p><br>
+            <p>On your birthday, I wish you all the laughter, warmth, and peace that you bring into my life. I pray that your days ahead are filled with happiness and that every dream in your heart comes true 🌍💫</p><br>
+            <p>Thank you for loving me, for being my safe space, and for making the world a brighter place just by being yourself 🌷🥰</p><br>
+            <p>No matter where life takes us, I promise to stand by your side, to support you through everything, and to love you more with every passing day 💓</p><br>
+            <p><b>Happy Birthday, Snewti. I love you, now and forever, beyond what words can ever say.</b></p>
+            <button class="next-btn" style="display:block; margin: 20px auto 0;" onclick="nextPage(5)">One Last Thing...</button>
+        </div>
+    </div>
+
+    <!-- Page 5: 5 Meetup Pictures -->
+    <div class="page" id="page5">
+        <h2>Our Beautiful Memories 📸</h2>
+        <p class="subtitle">5 times we met, and 5 times my heart fell for you all over again</p>
+        <div class="memories-grid">
+            <div class="memory-card">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80" alt="1st Meet">
+                <p>1st Meet</p>
+            </div>
+            <div class="memory-card">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" alt="2nd Meet">
+                <p>2nd Meet</p>
+            </div>
+            <div class="memory-card">
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" alt="3rd Meet">
+                <p>3rd Meet</p>
+            </div>
+            <div class="memory-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" alt="4th Meet">
+                <p>4th Meet</p>
+            </div>
+            <div class="memory-card" style="grid-column: span 2; justify-self: center; width: 60%;">
+                <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80" alt="5th Meet">
+                <p>5th Special Meet</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function nextPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+        }
+
+        // No Button escape logic
+        function moveNoButton() {
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 100 - 50;
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Balloon pop logic
+        let poppedCount = 0;
+        let revealedWords = [];
+        function balloonPop(word, element) {
+            // handled via inline or click
+        }
+        
+        const poppedWordsList = [];
+        function popBalloon(word) {
+            if(!poppedWordsList.includes(word)) {
+                poppedWordsList.push(word);
+                document.getElementById('balloonText').innerText = poppedWordsList.join(' ');
+                event.target.style.display = 'none';
+                if(poppedWordsList.length === 4) {
+                    document.getElementById('balloonNext').style.display = 'inline-block';
+                }
+            }
+        }
+
+        // Reasons tab logic
+        const reasons = [
+            "How your presence brightens up my days, making everything feel a little more magical and beautiful.",
+            "The way you smile brings so much warmth and happiness straight into my heart.",
+            "Every moment spent talking with you feels like pure peace and comfort.",
+            "You are the most precious and irreplaceable person in my entire life, Snewti."
+        ];
+        function showReason(index) {
+            document.querySelectorAll('.r-btn').forEach((btn, idx) => {
+                if(idx === index) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            document.getElementById('reasonText').innerText = reasons[index];
+        }
+
+        // Open Letter
+        function openLetter() {
+            document.getElementById('envelope').style.display = 'none';
+            document.getElementById('letterContent').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
